@@ -14,7 +14,6 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      patient: '',
       redirect: false
     }
     this.updateApptDate = this.updateApptDate.bind(this)
@@ -51,7 +50,7 @@ class App extends Component {
     let body = JSON.stringify({
       appointment: {
         patient_id: this.state.patient.id,
-        provider_id: '13',
+        provider_id: this.state.patient.provider_id,
         date: questionnaire.date,
         time: questionnaire.time,
         concern: questionnaire.concern,

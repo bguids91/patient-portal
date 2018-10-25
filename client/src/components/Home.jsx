@@ -1,18 +1,30 @@
 import React, { Component } from 'react'
-import AppointmentList from './AppointmentList.jsx';
-import MedicalInfo from './MedicalInfo.jsx';
+import AppointmentList from './AppointmentList.jsx'
+import MedicalInfo from './MedicalInfo.jsx'
+import PropTypes from 'prop-types'
 
 class Home extends Component {
   constructor() {
     super()
     this.state = {
-      patient: 1
     }
   }
 
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  redirectToTarget = () => {
+    this.context.router.history.push(`/login`)
+  }
+
   componentDidMount() {
-    this.getAppointments('upcoming')
-    this.getAppointments('completed')
+    if ( this.state.patient ) {
+      this.getAppointments('upcoming')
+      this.getAppointments('completed')
+    } else {
+      this.redirectToTarget()
+    }
   }
 
   fetch(endpoint) {
@@ -22,7 +34,7 @@ class Home extends Component {
   }
 
   deleteAppointment = (id) => {
-    fetch(`http://localhost:3001/api/patients/${this.props.patient.id}/appointments/${id}`, {
+    fetch(`/api/patients/${this.props.patient.id}/appointments/${id}`, {
       method: 'DELETE',
     }).then(() => {
       const appt = this.state.upcomingAppointments
@@ -55,11 +67,11 @@ class Home extends Component {
           <h2>Upcoming Appointments</h2>
           {upcomingAppointments && upcomingAppointments.length
               ? (<AppointmentList deleteAppointment={this.deleteAppointment} appointments={this.state.upcomingAppointments} patient={this.state.patient} status={'upcoming'} />)
-            : <div className='container' textAlign='center'>No appointments found.</div>}
+            : <div className='container'>No appointments found.</div>}
           <h2>Previous Appointments</h2>
           {completedAppointments && completedAppointments.length
             ? <AppointmentList appointments={this.state.completedAppointments} status={'completed'} />
-            : <div className='container' textAlign='center'>No appointments found.</div>}
+            : <div className='container'>No appointments found.</div>}
           </div>
           <div className='col-4'>
             <MedicalInfo patient={this.state.patient} />
