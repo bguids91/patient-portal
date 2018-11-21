@@ -6,6 +6,7 @@ import AppointmentPage from './components/AppointmentPage.jsx'
 import Calendar from './components/Calendar.jsx'
 import Questionnaire from './components/Questionnaire.jsx'
 import Navbar from './components/Navbar.jsx'
+import VitalsPage from './components/VitalsPage.jsx'
 import axios from 'axios'
 
 
@@ -133,6 +134,7 @@ class App extends Component {
           <Route path='/appointment' render={(props) => <AppointmentPage patient={this.state.patient} {...props} />} />
           <Route path='/bookingCalendar' render={() => <Calendar formattedDate={this.formattedDate} updateAppointment={this.updateAppointment} renderFormattedDateLabel={this.renderFormattedDateLabel} apptDate={this.state.apptDate} apptTime={this.state.apptTime} updateApptDate={this.updateApptDate} patient={this.state.patient} appointment={this.state.appointment} />} />
           <Route path='/bookingQuestionnaire' render={(props) => <Questionnaire formattedDate={this.formattedDate} newAppointment={this.newAppointment} handleQuestionChange={this.handleQuestionChange} updateQuestionnaire={this.updateQuestionnaire} handleQuestionSubmit={this.handleQuestionSubmit} conditions={this.state.conditions} apptDate={this.state.apptDate} apptTime={this.state.apptTime} {...props} />} />
+          <Route path='/vitals' render={(props) => <VitalsPage patient={this.state.patient} {...props} />}/>
         </Switch>
       </Router>
     </div>
